@@ -1,0 +1,4 @@
+gradio==5.49.1
+openai==2.6.1
+ollama==0.6.0
+anytree==2.13.0
