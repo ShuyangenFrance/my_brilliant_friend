@@ -194,7 +194,12 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="violet"), css="""
             )
             chatbot = gr.Chatbot(label="天才女友", height=520)
             branch_btns = gr.Radio(choices=[], label="💭 可考虑方向：", interactive=True, visible=False)
-            msg = gr.Textbox(placeholder="输入你的想法...", label="你的输入")
+
+            # 输入框和发送按钮放在同一行
+            with gr.Row():
+                msg = gr.Textbox(placeholder="你想什么呢？...", label="你的输入", scale=10, show_label=False, container=False)
+                send_btn = gr.Button("📨", scale=1, variant="primary", min_width=50)
+
             clear = gr.Button("🧹 清空对话")
             history_state = gr.State([])
 
@@ -203,18 +208,28 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="violet"), css="""
             balance_status = gr.Label(value=balance_status_value, label="开发者余额状态", elem_id="balance_status")
 
     # 事件绑定
+    # 按回车发送
     msg.submit(
         user_input_fn,
         inputs=[msg, chatbot, history_state, branch_btns, personality_dropdown, balance_status],
         outputs=[msg, chatbot, branch_btns, history_state, balance_status]
     )
 
+    # 点击发送按钮
+    send_btn.click(
+        user_input_fn,
+        inputs=[msg, chatbot, history_state, branch_btns, personality_dropdown, balance_status],
+        outputs=[msg, chatbot, branch_btns, history_state, balance_status]
+    )
+
+    # 选择分支
     branch_btns.change(
         choose_branch_fn,
         inputs=[branch_btns, chatbot, history_state, branch_btns, personality_dropdown, balance_status],
         outputs=[chatbot, branch_btns, history_state, balance_status]
     )
 
+    # 清空对话
     clear.click(clear_all, outputs=[chatbot, branch_btns, history_state, balance_status])
 
 demo.launch(server_name="0.0.0.0", server_port=7860)
