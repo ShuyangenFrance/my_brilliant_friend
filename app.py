@@ -72,7 +72,7 @@ MODEL_NAME = "deepseek-chat"
 MAX_TOKENS_PER_ROUND = 2000
 DEFAULT_DEEPSEEK_KEY = os.getenv("DEEPSEEK_API_KEY")
 MAX_USER_TOKENS = 50000  # 大概允许 50 回合
-balance_status_value = "💚 开发者账户状态：正常，你接着用哈！（但万一你聊high了我可能会没钱）"
+balance_status_value = "💚 开发者账户状态：正常，你接着用哈！（但最近很多用户聊high了我账户里剩余不多啦～）"
 
 # =====================
 # Token 粗略估算函数
